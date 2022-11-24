@@ -1,0 +1,7 @@
+Armes :
+1 - Pistolet
+2 - Mitraillette
+3 - Fusil à pompe
+4 - Machinegun
+5 - Bazooka
+6 - Roi Dragon Doré

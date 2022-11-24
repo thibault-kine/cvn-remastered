@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6746d97fc1b74c140be947aa122cc764, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  maxCapacity: 64
+  clipSize: 16
+  ammo: 16
+  ammoPrefab: {fileID: 8082122962059854653, guid: ed32c891d44fe4849a98c14ce89e4e4c, type: 3}
+  weaponPrefab: {fileID: 5271720828432455902, guid: 85241e82abb33a44f93a2634c6cf9bfc, type: 3}
+  sprite: {fileID: 21300000, guid: ed95ba55e3a51db41945a085bf694418, type: 3}
+  roundsByShot: 1
+  scatterAngle: 10
+  shootSpeed: 10
+  timeBetweenShots: 0
+  reloadTime: 0
+  ammoIcon: {fileID: 21300000, guid: ea48a7addfba40b4094a0383f271618d, type: 3}
+  ammoIconColor: {r: 0.78686786, g: 1, b: 0, a: 1}
