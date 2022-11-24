@@ -18,6 +18,9 @@ MonoBehaviour:
   ammoPrefab: {fileID: 8082122962059854653, guid: ed32c891d44fe4849a98c14ce89e4e4c, type: 3}
   weaponPrefab: {fileID: 5271720828432455902, guid: 85241e82abb33a44f93a2634c6cf9bfc, type: 3}
   sprite: {fileID: 21300000, guid: ed95ba55e3a51db41945a085bf694418, type: 3}
+  instantiated: 0
+  unlocked: 1
+  weaponScript: {fileID: 0}
   roundsByShot: 1
   scatterAngle: 10
   shootSpeed: 10

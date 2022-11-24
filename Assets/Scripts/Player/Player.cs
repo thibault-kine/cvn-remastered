@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     public Inventory inventory;
     private PlayerInputActions playerControls;
     private InputAction fire, reload;
-    public Transform weaponHolder;
 
 
     private void Awake()
@@ -50,22 +49,26 @@ public class Player : MonoBehaviour
 
         WeaponData currentWeapon = Hotbar.GetCurrentWeapon();
 
-        bool fireInput = fire.ReadValue<bool>();
-        bool reloadInput = reload.ReadValue<bool>();
+        float fireInput = fire.ReadValue<float>();
+        float reloadInput = reload.ReadValue<float>();
 
 
         if(currentWeapon != null)
         {
-            Instantiate(currentWeapon.weaponPrefab, weaponHolder);
-
-            if(fireInput)
+            if(!currentWeapon.instantiated && currentWeapon.unlocked)
             {
-                currentWeapon.weaponScript.Shoot();
+                currentWeapon.instantiated = true;
+                Instantiate(currentWeapon.weaponPrefab, transform);
             }
 
-            if(reloadInput || currentWeapon.ammo % currentWeapon.clipSize == 0)
+            if(fireInput > 0)
             {
-                currentWeapon.weaponScript.Reload();
+                //currentWeapon.weaponScript.Shoot();
+            }
+
+            if(reloadInput > 0 || currentWeapon.ammo % currentWeapon.clipSize == 0)
+            {
+                //currentWeapon.weaponScript.Reload();
             }
         }
     }

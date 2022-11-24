@@ -15,9 +15,12 @@ MonoBehaviour:
   maxCapacity: 36
   clipSize: 6
   ammo: 6
-  ammoPrefab: {fileID: 0}
-  weaponPrefab: {fileID: 0}
+  ammoPrefab: {fileID: 5519499822961079986, guid: 660b62dc874b9dd45bf1761dd1322b13, type: 3}
+  weaponPrefab: {fileID: 3409277746188996882, guid: d44669ffadaa0af46bac9c64c360b729, type: 3}
   sprite: {fileID: 21300000, guid: 0bb3dd8fd8071c541bc5a4ccf96b11fe, type: 3}
+  instantiated: 0
+  unlocked: 1
+  weaponScript: {fileID: 0}
   roundsByShot: 1
   scatterAngle: 20
   shootSpeed: 9

@@ -56,27 +56,43 @@ public class Hotbar : MonoBehaviour
 
         WeaponData prevWpn = _weapons[(currIndex - 1 < 0) ? _weapons.Length - 1 : currIndex - 1],
                    nextWpn = _weapons[(currIndex + 1 >= _weapons.Length) ? 0 : currIndex + 1];
+        
 
         if (prevWpn == null)
+        {
             previousWeaponImage.sprite = null;
+        }
         else
+        {
             previousWeaponImage.sprite = prevWpn.sprite;
-        previousWeaponImage.color = new Color(1, 1, 1, 0.5f);
-        previousWeaponImage.SetNativeSize();
+            previousWeaponImage.color = new Color(1, 1, 1, 0.5f);
+            previousWeaponImage.SetNativeSize();
+            prevWpn.instantiated = false;   
+        }
 
         if (currentWpn == null)
+        {
             currentWeaponImage.sprite = null;
+        }
         else
+        {
             currentWeaponImage.sprite = currentWpn.sprite;
-        currentWeaponImage.color = new Color(1, 1, 1, 1);
-        currentWeaponImage.SetNativeSize();
+            currentWeaponImage.color = new Color(1, 1, 1, 1);
+            currentWeaponImage.SetNativeSize();
+            currentWpn.instantiated = true;
+        }
 
         if (nextWpn == null)
+        {
             nextWeaponImage.sprite = null;
+        }
         else
+        {
             nextWeaponImage.sprite = nextWpn.sprite;
-        nextWeaponImage.color = new Color(1, 1, 1, 0.5f);
-        nextWeaponImage.SetNativeSize();
+            nextWeaponImage.color = new Color(1, 1, 1, 0.5f);
+            nextWeaponImage.SetNativeSize();
+            nextWpn.instantiated = false;
+        }
     }
 
     public static WeaponData GetCurrentWeapon()

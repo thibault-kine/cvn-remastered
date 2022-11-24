@@ -12,6 +12,8 @@ public class WeaponData : ScriptableObject
     public GameObject ammoPrefab;
     public GameObject weaponPrefab;
     public Sprite sprite;
+    public bool instantiated;
+    public bool unlocked;
 
     [Header("Shooting")]
     public Weapon weaponScript;

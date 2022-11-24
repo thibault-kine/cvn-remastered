@@ -535,7 +535,6 @@ MonoBehaviour:
   character: {fileID: 11400000, guid: 0ba7c01f69d284a41b35b23e35016dc5, type: 2}
   points: 0
   inventory: {fileID: 474617200}
-  weaponHolder: {fileID: 555892860}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
