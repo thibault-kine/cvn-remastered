@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         float reloadInput = reload.ReadValue<float>();
 
 
-        if(currentWeapon != null)
+        if(currentWeapon)
         {
             if(!currentWeapon.instantiated && currentWeapon.unlocked)
             {
@@ -63,12 +63,12 @@ public class Player : MonoBehaviour
 
             if(fireInput > 0)
             {
-                //currentWeapon.weaponScript.Shoot();
+                currentWeapon.weaponScript.Shoot();
             }
 
             if(reloadInput > 0 || currentWeapon.ammo % currentWeapon.clipSize == 0)
             {
-                //currentWeapon.weaponScript.Reload();
+                currentWeapon.weaponScript.Reload();
             }
         }
     }

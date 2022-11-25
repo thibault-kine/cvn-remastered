@@ -10,11 +10,11 @@ public class PistolScript : Weapon
 
     public override void Shoot()
     {
-
+        Debug.Log(weaponData.name + " shooting!");
     }
 
     public override void Reload()
     {
-
+        Debug.Log(weaponData.name + " reloading!");
     }
 }
