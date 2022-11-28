@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PistolScript : Weapon
 {
-    public WeaponData weaponData;
-    public Transform firePoint;
+    public override WeaponData weaponData { get; set; }
+    public override Transform firePoint { get; set; }
 
 
     public override void Shoot()

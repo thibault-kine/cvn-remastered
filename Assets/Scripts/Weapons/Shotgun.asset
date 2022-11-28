@@ -20,7 +20,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0bb3dd8fd8071c541bc5a4ccf96b11fe, type: 3}
   instantiated: 0
   unlocked: 1
-  weaponScript: {fileID: 0}
+  weaponScript: {fileID: 1124335847162338742, guid: d44669ffadaa0af46bac9c64c360b729, type: 3}
   roundsByShot: 1
   scatterAngle: 20
   shootSpeed: 9

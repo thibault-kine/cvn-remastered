@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
 
         points.text = player.points.ToString();
         currentAmmo.text = currentWeapon.ammo.ToString();
-        maxAmmo.text = currentWeapon.maxCapacity.ToString();
+        maxAmmo.text = currentWeapon.clipSize.ToString();
 
 
         healthbarL.fillAmount = player.character.currentHealth / 100f;

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public CharacterData character;
     public int points;
     public Inventory inventory;
+    public Transform weaponHandler;
     private PlayerInputActions playerControls;
     private InputAction fire, reload;
 
@@ -46,19 +47,33 @@ public class Player : MonoBehaviour
         else if(character.currentHealth > character.maxHealth)
             character.currentHealth = character.maxHealth;
 
-
         WeaponData currentWeapon = Hotbar.GetCurrentWeapon();
 
         float fireInput = fire.ReadValue<float>();
         float reloadInput = reload.ReadValue<float>();
 
-
-        if(currentWeapon)
+        if(currentWeapon != null)
         {
-            if(!currentWeapon.instantiated && currentWeapon.unlocked)
+            if(currentWeapon.unlocked && !currentWeapon.instantiated)
             {
+                Instantiate(currentWeapon.weaponPrefab, weaponHandler);
                 currentWeapon.instantiated = true;
-                Instantiate(currentWeapon.weaponPrefab, transform);
+            }
+
+            if(weaponHandler.transform.childCount > 1)
+            {
+                WeaponData[] childArr = new WeaponData[weaponHandler.transform.childCount];
+                WeaponData weaponToKeep = currentWeapon;
+
+                for(int i = 0; i < childArr.Length; i++)
+                {
+                    childArr[i] = weaponHandler.transform.GetChild(i).GetComponent<Weapon>().weaponData;
+                    if (childArr[i] != weaponToKeep)
+                    {
+                        childArr[i].instantiated = false;
+                        Destroy(childArr[i].weaponPrefab);
+                    }
+                }
             }
 
             if(fireInput > 0)
@@ -66,7 +81,7 @@ public class Player : MonoBehaviour
                 currentWeapon.weaponScript.Shoot();
             }
 
-            if(reloadInput > 0 || currentWeapon.ammo % currentWeapon.clipSize == 0)
+            if(reloadInput > 0 || currentWeapon.ammo % currentWeapon.clipSize != 0)
             {
                 currentWeapon.weaponScript.Reload();
             }
