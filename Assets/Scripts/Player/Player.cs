@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public Inventory inventory;
     public Transform weaponHandler;
     private PlayerInputActions playerControls;
-    private InputAction fire, reload;
+    private InputAction fire, reload, mousePos;
 
 
     private void Awake()
@@ -25,12 +25,16 @@ public class Player : MonoBehaviour
 
         reload = playerControls.Player.Reload;
         reload.Enable();
+
+        mousePos = playerControls.Player.MousePosition;
+        mousePos.Enable();
     }
 
     private void OnDisable()
     {
         fire.Disable();
         reload.Disable();
+        mousePos.Disable();
     }
 
 
@@ -42,19 +46,22 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(character.currentHealth < 0)
+        #region Health
+        if (character.currentHealth < 0)
             character.currentHealth = 0;
         else if(character.currentHealth > character.maxHealth)
             character.currentHealth = character.maxHealth;
+        #endregion
 
+        #region Hotbar
         WeaponData currentWeapon = Hotbar.GetCurrentWeapon();
 
-        float fireInput = fire.ReadValue<float>();
-        float reloadInput = reload.ReadValue<float>();
+        bool isShooting = fire.triggered;
+        bool isReloading = reload.triggered;
 
         if(currentWeapon != null)
         {
-            if(currentWeapon.unlocked && !currentWeapon.instantiated)
+            if(currentWeapon.unlocked && !currentWeapon.instantiated && GameObject.Find(currentWeapon.name) == null)
             {
                 Instantiate(currentWeapon.weaponPrefab, weaponHandler);
                 currentWeapon.instantiated = true;
@@ -67,7 +74,7 @@ public class Player : MonoBehaviour
 
                 for(int i = 0; i < childArr.Length; i++)
                 {
-                    childArr[i] = weaponHandler.transform.GetChild(i).GetComponent<Weapon>().weaponData;
+                    childArr[i] = weaponHandler.transform.GetChild(i).GetComponent<Weapon>().GetWeaponData();
                     if (childArr[i] != weaponToKeep)
                     {
                         childArr[i].instantiated = false;
@@ -76,16 +83,19 @@ public class Player : MonoBehaviour
                 }
             }
 
-            if(fireInput > 0)
+            currentWeapon.weaponPrefab.transform.LookAt(GetMousePosition());
+
+            if(isShooting)
             {
                 currentWeapon.weaponScript.Shoot();
             }
 
-            if(reloadInput > 0 || currentWeapon.ammo % currentWeapon.clipSize != 0)
+            if(isReloading || currentWeapon.ammo % currentWeapon.clipSize != 0)
             {
                 currentWeapon.weaponScript.Reload();
             }
         }
+        #endregion
     }
 
     public void TakeDamage(int amount)
@@ -96,5 +106,10 @@ public class Player : MonoBehaviour
     public void Heal(int amount)
     {
         character.currentHealth += amount;
+    }
+
+    public Vector2 GetMousePosition()
+    {
+        return mousePos.ReadValue<Vector2>();
     }
 }

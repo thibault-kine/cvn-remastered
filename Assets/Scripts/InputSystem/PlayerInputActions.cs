@@ -64,15 +64,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SummonWeaponWheel"",
-                    ""type"": ""Button"",
-                    ""id"": ""0d7d9f23-8914-4bfb-887e-909faac927c3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""HotbarScroll"",
                     ""type"": ""PassThrough"",
                     ""id"": ""548c101b-9d53-40ea-8b19-b2ffd7add020"",
@@ -80,6 +71,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""0ae6c047-861b-4cd1-a1b6-8161e0d8f29a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -305,17 +305,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""38f47d98-6fce-408b-a6f9-a6362b086c0b"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""SummonWeaponWheel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9a81504e-7e0e-40cb-91f5-77b7c9cfdc37"",
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
@@ -333,6 +322,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0172e48-4233-461a-a778-c84173e87884"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -924,8 +924,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
-        m_Player_SummonWeaponWheel = m_Player.FindAction("SummonWeaponWheel", throwIfNotFound: true);
         m_Player_HotbarScroll = m_Player.FindAction("HotbarScroll", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1001,8 +1001,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Reload;
-    private readonly InputAction m_Player_SummonWeaponWheel;
     private readonly InputAction m_Player_HotbarScroll;
+    private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1011,8 +1011,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
-        public InputAction @SummonWeaponWheel => m_Wrapper.m_Player_SummonWeaponWheel;
         public InputAction @HotbarScroll => m_Wrapper.m_Player_HotbarScroll;
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1034,12 +1034,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
-                @SummonWeaponWheel.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSummonWeaponWheel;
-                @SummonWeaponWheel.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSummonWeaponWheel;
-                @SummonWeaponWheel.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSummonWeaponWheel;
                 @HotbarScroll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbarScroll;
                 @HotbarScroll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbarScroll;
                 @HotbarScroll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHotbarScroll;
+                @MousePosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1056,12 +1056,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
-                @SummonWeaponWheel.started += instance.OnSummonWeaponWheel;
-                @SummonWeaponWheel.performed += instance.OnSummonWeaponWheel;
-                @SummonWeaponWheel.canceled += instance.OnSummonWeaponWheel;
                 @HotbarScroll.started += instance.OnHotbarScroll;
                 @HotbarScroll.performed += instance.OnHotbarScroll;
                 @HotbarScroll.canceled += instance.OnHotbarScroll;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
         }
     }
@@ -1222,8 +1222,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
-        void OnSummonWeaponWheel(InputAction.CallbackContext context);
         void OnHotbarScroll(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
